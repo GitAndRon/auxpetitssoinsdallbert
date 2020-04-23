@@ -17,6 +17,20 @@
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body id="page-top">
+        <?php
+        include("vars.inc.php");
+        include("fonctions.inc.php");
+
+        $quellePage = isset($_GET["titre"])?$_GET["titre"]:"Accueil";
+         /* pour trouver les pages */
+           $query = "SELECT DISTINCT(titre)
+           FROM pages
+           WHERE actif
+           ORDER by rang";
+
+           $pages = faire_la_liste($query,null,"titre",NULL);
+
+        ?>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">
@@ -24,11 +38,18 @@
                 <a class=" js-scroll-trigger" href="#page-top"><img src="assets/img/horizontal_couleur_2po.jpg" /></a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i class="fas fa-bars ml-1"></i></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ml-auto">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Services</a></li>
-                       <!--  <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a></li> -->
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Qui sommes-nous?</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#team">Tarifs</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Nous contacter</a></li>
+                    <?php
+                        $taille = sizeof($pages);
+                        $actif="leaf";
+                        $vars = array("titre"=>"");
+                        for ($i = 0;  $i < $taille;  ++$i) {
+                                echo "<li class=\"nav-item\"><a class=\"nav-link js-scroll-trigger\" href=\"#".$pages[$i]."\">$pages[$i]</a></li>";
+                        }
+
+
+
+                    ?>
+
                     </ul>
                 </div>
             </div>
@@ -36,8 +57,8 @@
         <!-- Masthead-->
         <header class="masthead">
             <div class="container">
-                <div class="masthead-subheading">Soins infirmiers et prélèvements sanguins à domicile</div>
-                <div class="masthead-heading text-uppercase"></div>
+                <div class="masthead-heading">Soins infirmiers et prélèvements sanguins à domicile</div>
+                <div class="masthead-subheading ">Dans la Petite-Nation</div>
                 <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Et encore...</a>
             </div>
         </header>
